@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     public float shootInterval = 2f;
 
     private float timeSinceLastShot = 0f;
-   
+    private bool IsFacingRight = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -104,9 +104,16 @@ public class Enemy : MonoBehaviour
 
         //Flip the enemy transform to look into the point's direction
         if (goalPoint.transform.position.x > transform.position.x)
+        {
+            IsFacingRight = true;
             transform.localScale = new Vector3(-1, 1, 1);
+        }
         else
-            transform.localScale = new Vector3(1, 1, 1);
+        {
+            IsFacingRight = false;
+            transform.localScale = new Vector3(1, 1, 1); 
+        }
+
         //Move the enemy towards the goal point
         transform.position = Vector2.MoveTowards(transform.position, goalPoint.position, speed*Time.deltaTime);
 
@@ -162,7 +169,7 @@ public class Enemy : MonoBehaviour
         GameObject projectile = Instantiate (projectilePrefab, firePoint.position, firePoint.rotation);
 
         //Where is the enemy facing
-        Vector2 shootDirection = firePoint.right;
+        Vector2 shootDirection = IsFacingRight ? Vector2.right : Vector2.left;
 
         //Launch the bullet
         projectile.GetComponent<Projectile>().Launch(shootDirection);

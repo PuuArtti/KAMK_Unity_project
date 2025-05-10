@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour
 {
     public float speed = 5f;
     public float lifetime = 3f;
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,10 +21,21 @@ public class Projectile : MonoBehaviour
     }
 
     public void Launch(Vector2 direction)
+
+       
     {
-        if (rb != null) // Ensure Rigidbody2D is not null
+        
+        if (rb != null) 
         {
-            rb.linearVelocity = direction * speed; // Use linearVelocity instead of velocity
+            rb.linearVelocity = direction * speed;
+            if (direction.x < 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1); // Flip horizontally (negative X)
+            }
+            else if (direction.x > 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1); // Default scale (positive X)
+            }
         }
         else
         {
@@ -36,7 +47,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (Input.GetButton("Fire2"))
+            if (Input.GetButtonDown("Fire2"))
             {
                 Bounce();
             }
@@ -67,17 +78,21 @@ public class Projectile : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+        if (collision.CompareTag("Shield"))
+            Bounce();
     }
 
     public void Bounce()
     {
         if (rb != null)
         {
-            rb.linearVelocity = -rb.linearVelocity; // Reverse the velocity using linearVelocity
+            rb.linearVelocity = -rb.linearVelocity; 
         }
         else
         {
             Debug.LogError("Rigidbody2D is not initialized!");
         }
+
+        transform.localScale = new Vector2(-1,1); 
     }
 }

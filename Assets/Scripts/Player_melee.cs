@@ -14,6 +14,7 @@ public class Player_melee : MonoBehaviour
     public float attackRate = 2f;
     float nextAttackTime = 0F;
     Rigidbody2D rb;
+    public bool isAttacking = false;
 
     private void Start()
     {
@@ -28,8 +29,15 @@ public class Player_melee : MonoBehaviour
             if (Input.GetButtonDown("Fire2"))
             {
                 Melee();
+                isAttacking = true;
                 nextAttackTime = Time.time + 1f / attackRate;
+                
+                
 
+            }
+            else
+            {
+                isAttacking = false ;
             }
         }       
     }
