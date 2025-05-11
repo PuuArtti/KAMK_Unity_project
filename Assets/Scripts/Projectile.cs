@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
     public float speed = 5f;
     public float lifetime = 3f;
     public Rigidbody2D rb;
+    bool bounced = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -47,7 +48,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (Input.GetButtonDown("Fire2"))
+            if (Input.GetButton("Fire2"))
             {
                 Bounce();
             }
@@ -78,8 +79,16 @@ public class Projectile : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-        if (collision.CompareTag("Shield"))
-            Bounce();
+        if (collision.CompareTag("Enemy"))
+        {
+            if (bounced == true) 
+            {
+                collision.GetComponent<Enemy>().Die();
+                Destroy(gameObject );
+
+            }
+        }
+       
     }
 
     public void Bounce()
@@ -87,6 +96,7 @@ public class Projectile : MonoBehaviour
         if (rb != null)
         {
             rb.linearVelocity = -rb.linearVelocity; 
+            bounced= true;
         }
         else
         {
@@ -95,4 +105,7 @@ public class Projectile : MonoBehaviour
 
         transform.localScale = new Vector2(-1,1); 
     }
+
+
+ 
 }

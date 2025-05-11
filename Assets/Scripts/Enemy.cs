@@ -152,7 +152,7 @@ public class Enemy : MonoBehaviour
 
       
     }
-    void Die() 
+    public void Die() 
     { //Disable Enemy
         GetComponent<Collider2D>().enabled = false;
         this.enabled = false;

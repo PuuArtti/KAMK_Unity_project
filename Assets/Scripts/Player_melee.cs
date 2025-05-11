@@ -14,7 +14,8 @@ public class Player_melee : MonoBehaviour
     public float attackRate = 2f;
     float nextAttackTime = 0F;
     Rigidbody2D rb;
-    public bool isAttacking = false;
+    public bool isAttackActive = false;
+    public float attackActiveTimer = 0.3f;
 
     private void Start()
     {
@@ -29,16 +30,13 @@ public class Player_melee : MonoBehaviour
             if (Input.GetButtonDown("Fire2"))
             {
                 Melee();
-                isAttacking = true;
+                
                 nextAttackTime = Time.time + 1f / attackRate;
                 
                 
 
             }
-            else
-            {
-                isAttacking = false ;
-            }
+            
         }       
     }
 
@@ -47,6 +45,12 @@ public class Player_melee : MonoBehaviour
     {
         //Play attack Anim
         animator.SetTrigger("Attack");
+        isAttackActive = true;
+        attackActiveTimer -= Time.time;
+        if (attackActiveTimer <= 0f)
+        {
+            isAttackActive =false;
+        }
 
         //Detect enemies in range of the attack
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
@@ -75,6 +79,11 @@ public class Player_melee : MonoBehaviour
             return;
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    private void Reset()
+    {
+        
     }
 
 }
