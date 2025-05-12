@@ -24,15 +24,6 @@ public class Shield : MonoBehaviour
        ShieldActive = GetComponent<BoxCollider2D> ().enabled = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Bullet"))
-        {
-
-            Debug.Log("Bullet");
-            projectile.GetComponent<Projectile>().Bounce();
-
-        }
-    }
+   
 
 }

@@ -47,5 +47,19 @@ public class Health : MonoBehaviour
     
     }
 
+    public void AddLive() 
+    {
+        if (livesRemaining < 3)
+        {
+            livesRemaining ++;
+            lives[livesRemaining].enabled = true;
+        }
+        else
+        {
+            return;
+        }
+
+    }
+
    
 }
