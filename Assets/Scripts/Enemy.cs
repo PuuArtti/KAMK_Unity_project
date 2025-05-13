@@ -84,8 +84,8 @@ public class Enemy : MonoBehaviour
         p2.transform.SetParent(waypoints.transform);
 
         // reset their position to waypoints objects
-        p1.transform.position = waypoints.transform.position + new Vector3 (10, 0, 0);        
-        p2.transform.position = waypoints.transform.position + new Vector3(-10, 0, 0);
+        p1.transform.position = waypoints.transform.position + new Vector3 (5, 0, 0);        
+        p2.transform.position = waypoints.transform.position + new Vector3(-5, 0, 0);
         
         //Init points list then add the points to it
         points = new List<Transform>();
