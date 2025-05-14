@@ -51,8 +51,9 @@ public class Health : MonoBehaviour
     {
         if (livesRemaining < 3)
         {
-            livesRemaining ++;
+            
             lives[livesRemaining].enabled = true;
+            livesRemaining++;
         }
         else
         {

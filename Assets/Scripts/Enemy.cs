@@ -2,6 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using System.Collections;
 [RequireComponent(typeof(BoxCollider2D))]
 
 public class Enemy : MonoBehaviour
@@ -84,8 +85,8 @@ public class Enemy : MonoBehaviour
         p2.transform.SetParent(waypoints.transform);
 
         // reset their position to waypoints objects
-        p1.transform.position = waypoints.transform.position + new Vector3 (5, 0, 0);        
-        p2.transform.position = waypoints.transform.position + new Vector3(-5, 0, 0);
+        p1.transform.position = waypoints.transform.position + new Vector3 (4, 0, 0);        
+        p2.transform.position = waypoints.transform.position + new Vector3(-4, 0, 0);
         
         //Init points list then add the points to it
         points = new List<Transform>();
@@ -143,7 +144,8 @@ public class Enemy : MonoBehaviour
     public void TakeDamage() 
     {
         health -= 1f;
-        
+        StartCoroutine(FlashRed());
+
 
         if (health <= 0f) 
         {
@@ -152,6 +154,19 @@ public class Enemy : MonoBehaviour
 
       
     }
+
+    private IEnumerator FlashRed()
+    {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            Color originalColor = spriteRenderer.color;
+            spriteRenderer.color = Color.blue; // Change to red
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.color = originalColor; // Revert to original color
+        }
+    }
+
     public void Die() 
     { //Disable Enemy
         GetComponent<Collider2D>().enabled = false;

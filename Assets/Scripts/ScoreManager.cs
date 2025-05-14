@@ -71,6 +71,11 @@ public class ScoreManager : MonoBehaviour
 
     void SpawnMeat() 
     {
+        if (MeatSpawn.Length == 0)
+        {
+            Debug.LogWarning("MeatSpawn array is empty!");
+            return;
+        }
         int randomIndex = Random.Range(0, MeatSpawn.Length);
         GameObject chosenSpawnPoint = MeatSpawn[randomIndex];
 
