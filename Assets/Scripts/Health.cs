@@ -38,8 +38,7 @@ public class Health : MonoBehaviour
         if (livesRemaining == 0) 
         {
 
-            FindFirstObjectByType<GameManager>().Restart();
-            
+            FindFirstObjectByType<GameManager>().GameOver();
         
         
         }

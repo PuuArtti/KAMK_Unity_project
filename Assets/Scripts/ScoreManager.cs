@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,10 +13,16 @@ public class ScoreManager : MonoBehaviour
     public GameObject Meat;
     public GameObject[] MeatSpawn;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+   
+
     void Start()
     {
+        //Hi_score = PlayerPrefs.GetInt("HiScore",Hi_score);
         UpdateScoreText(); //Show score on HUD
         UpdateHiScore(); //show hiscore
+        score = 0;
+        Debug.Log("HiScore Loaded: " + Hi_score);
+
     }
 
     // Update is called once per frame
@@ -47,13 +52,17 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateHiScore() 
     {
-        if (score > Hi_score)
+        if (score >= Hi_score)
         {
-            HiscoreText.text = "HiScore:" +score.ToString();
+            Hi_score = score;
+            
+            HiscoreText.text = "HiScore:" + score.ToString();
+            PlayerPrefs.SetInt("HiScore", Hi_score);
         }
         else 
-        { 
-            return; 
+        {
+            HiscoreText.text = "HiScore:" + score.ToString();
+            Hi_score = PlayerPrefs.GetInt("HiScore", Hi_score);
         }
         
     }
